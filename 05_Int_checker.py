@@ -1,13 +1,14 @@
 # Functions
 def int_checker(question, exit_code="xxx"):
-    """ Function to make sure user inputs and integer """
+    """ Function to make sure user inputs an integer greater than 0"""
 
     while True:
 
+        # tests for exit code
         test_exit = input(question)
 
         if test_exit == exit_code or test_exit == exit_code[0]:
-            return 1
+            return 0
 
         try:
             response = int(test_exit)
@@ -15,16 +16,19 @@ def int_checker(question, exit_code="xxx"):
             if response > 0:
                 return response
             else:
-                print("Please enter an integer greater than 0\n")
+                print("Please enter an integer greater than 0")
 
+        # incase input isn't an integer
         except ValueError:
-            print("Please enter an integer\n")
+            print("Please enter an integer")
 
 
 # Main
-test = int_checker("Input a number: ")
+while 1:
+    test = int_checker("Input a number: ")
 
-if test == 1:
-    print("You left")
-else:
-    print(f"Your number is: {test}")
+    if test == 0:
+        print("You left")
+        break
+    else:
+        print(f"Your number is: {test}\n")
