@@ -1,12 +1,28 @@
 # Functions
-def num_check(question, datatype,  exit_code=None):
+def num_check(question, datatype=float, low=0, high=None, exit_code="xxx"):
     """ Function to make sure user inputs an integer / float that is within parameters """
+
+    # check if parameters are set
+    if low != None and high == None:
+        ror = f" that is at least {low}"
+        check = 0
+    elif low != None and high != None:
+        ror = f" that is between {low} and {high}"
+        check = 1
+    elif low == None and high != None:
+        ror = f" that at most {high}"
+        check = 2
+    else:
+        ror = ""
+        check = 3
 
     # get correct error message for data type
     if datatype == int:
-        err = "Please enter an integer greater than 0"
+        err = "Please enter an integer"
     else:
-        err = "Please enter a number greater than 0"
+        err = "Please enter a number"
+
+    error = err + ror
 
     while True:
 
@@ -14,32 +30,36 @@ def num_check(question, datatype,  exit_code=None):
         test_exit = input(question).lower()
 
         if test_exit == exit_code or test_exit == exit_code[0]:
-            return 0
+            return "exit"
 
-        # Case for integers
-        if datatype == int:
-            try:
-                response = datatype(test_exit)
+        # try statement for checking that it is of the correct datatype
+        try:
+            response = datatype(test_exit)
 
-                if response > 0:
+            # Different calculations for set values of low and high
+            if check == 0:
+                if response >= low:
                     return response
                 else:
-                    print(err)
+                    print(error)
 
-            except ValueError:
-                print(err)
-
-        # case for others (mostly float)
-        else:
-            try:
-                response = datatype(test_exit)
-                if response > 0:
+            elif check == 1:
+                if low <= response <= high:
                     return response
                 else:
-                    print(err)
+                    print(error)
 
-            except ValueError:
-                print(err)
+            elif check == 2:
+                if response <= high:
+                    return response
+                else:
+                    print(error)
+
+            else:
+                return response
+
+        except ValueError:
+            print(err)
 
 
 # Main
@@ -48,11 +68,7 @@ def num_check(question, datatype,  exit_code=None):
 while 1:
     print()
 
-    my_float = num_check("Please enter a number: ", float)
-    print(f"You chose {my_float}")
-    print()
-    my_int = num_check("Please enter an integer ", int, "")
-    if my_int == 0:
-        print("You left")
-    else:
-        print(f"You chose {my_int}")
+    my_num = num_check("Choose a number: ", float, 1, 10)
+    if my_num == "exit":
+        break
+    print(f"You chose {my_num}")

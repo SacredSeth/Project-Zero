@@ -1,5 +1,5 @@
 # Functions
-def num_check(question, datatype,  exit_code=None):
+def num_check(question, datatype,  exit_code="xxx"):
     """ Function to make sure user inputs an integer / float that is greater than 0 """
 
     # get correct error message for data type
@@ -50,9 +50,7 @@ while 1:
 
     my_float = num_check("Please enter a number: ", float)
     print(f"You chose {my_float}")
-    print()
-    my_int = num_check("Please enter an integer ", int, "")
-    if my_int == 0:
+
+    if my_float == 0:
         print("You left")
-    else:
-        print(f"You chose {my_int}")
+        break
